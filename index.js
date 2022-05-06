@@ -33,7 +33,7 @@ client.on("messageCreate", async function (messages) {
         messages.delete();
         // const { symbol, entry, type: _type } = content;
         const symbol = content.symbol;
-        const entry = content.entry;
+        // const entry = content.entry;
         const _type = content.type;
         const expiration = getNextFriday(new Date());
 
@@ -62,11 +62,11 @@ client.on("messageCreate", async function (messages) {
               value: symbol,
               inline: true,
             },
-            {
-              name: "Entry",
-              value: entry,
-              inline: true,
-            },
+            // {
+            //   name: "Entry",
+            //   value: entry,
+            //   inline: true,
+            // },
             {
               name: "Possition",
               value: "Day Trade",
