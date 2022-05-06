@@ -23,12 +23,13 @@ client.once("ready", () => {
 
 client.on("messageCreate", async function (messages) {
   try {
+    console.log(messages.author.username);
     var x = messages.content;
-    console.log(typeof x)
+    console.log(typeof x);
     content = typeof x === "string" ? JSON.parse(x) : x;
-    console.log(content)
+    console.log(content);
     if (content.title === "bot") {
-      console.log("here")
+      console.log("here");
       messages.delete();
       // const { symbol, entry, type: _type } = content;
       const symbol = content.symbol;
@@ -43,8 +44,7 @@ client.on("messageCreate", async function (messages) {
         // .setURL("https://www.fiverr.com/sharif582?up_rollout=true")
         .setAuthor({
           name: "Simulate & Trade",
-          iconURL:
-            "https://s3.tradingview.com/userpics/37305410-SbsU_big.png",
+          iconURL: "https://s3.tradingview.com/userpics/37305410-SbsU_big.png",
           // url: "https://www.fiverr.com/sharif582?up_rollout=true",
         })
         .setThumbnail(
@@ -78,10 +78,10 @@ client.on("messageCreate", async function (messages) {
           }
         )
 
-        .setTimestamp()
-        // .setFooter({
-        //   text: "Footer text here",
-        // });
+        .setTimestamp();
+      // .setFooter({
+      //   text: "Footer text here",
+      // });
 
       messages.channel.send({ embeds: [exampleEmbed] });
     }
