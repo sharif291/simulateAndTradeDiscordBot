@@ -23,67 +23,69 @@ client.once("ready", () => {
 
 client.on("messageCreate", async function (messages) {
   try {
-    console.log(messages.author.username);
-    var x = messages.content;
-    console.log(typeof x);
-    content = typeof x === "string" ? JSON.parse(x) : x;
-    console.log(content);
-    if (content.title === "bot") {
-      console.log("here");
-      messages.delete();
-      // const { symbol, entry, type: _type } = content;
-      const symbol = content.symbol;
-      const entry = content.entry;
-      const _type = content.type;
-      const expiration = getNextFriday(new Date());
+    if (messages.author.username == "Options Bot") {
+      var x = messages.content;
+      console.log(typeof x);
+      content = typeof x === "string" ? JSON.parse(x) : x;
+      console.log(content);
+      if (content.title === "bot") {
+        console.log("here");
+        messages.delete();
+        // const { symbol, entry, type: _type } = content;
+        const symbol = content.symbol;
+        const entry = content.entry;
+        const _type = content.type;
+        const expiration = getNextFriday(new Date());
 
-      // inside a command, event listener, etc.
-      const exampleEmbed = new MessageEmbed()
-        .setColor("#0099ff")
-        .setTitle("Option Alert")
-        // .setURL("https://www.fiverr.com/sharif582?up_rollout=true")
-        .setAuthor({
-          name: "Simulate & Trade",
-          iconURL: "https://s3.tradingview.com/userpics/37305410-SbsU_big.png",
-          // url: "https://www.fiverr.com/sharif582?up_rollout=true",
-        })
-        .setThumbnail(
-          "https://s3.tradingview.com/userpics/37305410-SbsU_big.png"
-        )
-        .addFields(
-          {
-            name: "Type",
-            value: _type,
-            inline: true,
-          },
-          {
-            name: "Symbol",
-            value: symbol,
-            inline: true,
-          },
-          {
-            name: "Entry",
-            value: entry,
-            inline: true,
-          },
-          {
-            name: "Possition",
-            value: "Day Trade",
-            inline: false,
-          },
-          {
-            name: "Expiration",
-            value: expiration,
-            inline: false,
-          }
-        )
+        // inside a command, event listener, etc.
+        const exampleEmbed = new MessageEmbed()
+          .setColor("#0099ff")
+          .setTitle("Option Alert")
+          // .setURL("https://www.fiverr.com/sharif582?up_rollout=true")
+          .setAuthor({
+            name: "Simulate & Trade",
+            iconURL:
+              "https://s3.tradingview.com/userpics/37305410-SbsU_big.png",
+            // url: "https://www.fiverr.com/sharif582?up_rollout=true",
+          })
+          .setThumbnail(
+            "https://s3.tradingview.com/userpics/37305410-SbsU_big.png"
+          )
+          .addFields(
+            {
+              name: "Type",
+              value: _type,
+              inline: true,
+            },
+            {
+              name: "Symbol",
+              value: symbol,
+              inline: true,
+            },
+            {
+              name: "Entry",
+              value: entry,
+              inline: true,
+            },
+            {
+              name: "Possition",
+              value: "Day Trade",
+              inline: false,
+            },
+            {
+              name: "Expiration",
+              value: expiration,
+              inline: false,
+            }
+          )
 
-        .setTimestamp();
-      // .setFooter({
-      //   text: "Footer text here",
-      // });
+          .setTimestamp();
+        // .setFooter({
+        //   text: "Footer text here",
+        // });
 
-      messages.channel.send({ embeds: [exampleEmbed] });
+        messages.channel.send({ embeds: [exampleEmbed] });
+      }
     }
   } catch (err) {
     console.log(err.message);
