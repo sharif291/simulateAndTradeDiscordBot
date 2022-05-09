@@ -29,7 +29,6 @@ client.on("messageCreate", async function (messages) {
       content = typeof x === "string" ? JSON.parse(x) : x;
       console.log(content);
       if (content.title === "bot") {
-        console.log("here");
         messages.delete();
         // const { symbol, entry, type: _type } = content;
         const symbol = content.symbol;
@@ -68,7 +67,7 @@ client.on("messageCreate", async function (messages) {
             //   inline: true,
             // },
             {
-              name: "Possition",
+              name: "Position",
               value: "Day Trade",
               inline: false,
             },
