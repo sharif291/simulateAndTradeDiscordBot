@@ -20,19 +20,6 @@ const client = new Client({
 });
 client.once("ready", () => {
   console.log("BOT IS ONLINE"); //message when bot is online
-  // let date = new Date("2022-05-05T21:05:30z");
-  // date = date.toLocaleString("en-US", {
-  //   timeZone: "America/New_York",
-  // });
-  // console.log(date);
-  var options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  var today = new Date();
-  console.log(today.getTimezoneOffset());
 });
 
 client.on("messageCreate", async function (messages) {
