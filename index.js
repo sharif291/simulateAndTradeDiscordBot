@@ -23,13 +23,22 @@ client.once("ready", () => {
 
 client.on("messageCreate", async function (messages) {
   try {
-    if (1) {
+    if (messages.author.username == "Options Bot" || "Sharif291") {
+      messages.delete();
+      var dt = new Date();
+      var offset = -240; //Timezone offset for EST in minutes.
+      var estDate = new Date(dt.getTime() + offset * 60 * 1000);
+      console.log(estDate);
+      console.log(estDate.getUTCHours());
+      console.log(estDate.getUTCMinutes());
+      h_now = estDate.getUTCHours() * 60 + estDate.getUTCMinutes();
       var x = messages.content;
-      console.log(typeof x);
       content = typeof x === "string" ? JSON.parse(x) : x;
-      console.log(content);
-      if (content.title.toLowerCase() === "bot" || "bot-1") {
-        messages.delete();
+      if (
+        (content.title.toLowerCase() === "bot" || "bot-1") &&
+        h_now > 570 &&
+        h_now <= 960
+      ) {
         // const { symbol, entry, type: _type } = content;
         const symbol = content.symbol;
         // const entry = content.entry;
@@ -39,13 +48,10 @@ client.on("messageCreate", async function (messages) {
         // inside a command, event listener, etc.
         const exampleEmbed = new MessageEmbed()
           .setColor(_type.toLowerCase() === "call" ? "#00FF00" : "#ff0505")
-          // .setTitle("Option Alert")
-          // .setURL("https://www.fiverr.com/sharif582?up_rollout=true")
           .setAuthor({
             name: "Simulate & Trade",
             iconURL:
               "https://s3.tradingview.com/userpics/37305410-SbsU_big.png",
-            // url: "https://www.fiverr.com/sharif582?up_rollout=true",
           })
           .setThumbnail(
             "https://s3.tradingview.com/userpics/37305410-SbsU_big.png"
@@ -81,12 +87,7 @@ client.on("messageCreate", async function (messages) {
               inline: false,
             }
           )
-
           .setTimestamp();
-        // .setFooter({
-        //   text: "Footer text here",
-        // });
-
         messages.channel.send({ embeds: [exampleEmbed] });
       }
     }
