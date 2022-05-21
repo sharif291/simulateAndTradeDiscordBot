@@ -23,8 +23,8 @@ client.once("ready", () => {
 
 client.on("messageCreate", async function (messages) {
   try {
-    if (messages.author.username == "Options Bot") {
-      messages.delete();
+    if (messages.author.username == "Options Bot" || messages.author.username == "sharif291") {
+      if(messages.content.title=="bot"||"bot-1") { messages.delete(); }
       var dt = new Date();
       var offset = -240; //Timezone offset for EST in minutes.
       var estDate = new Date(dt.getTime() + offset * 60 * 1000);
