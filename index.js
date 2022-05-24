@@ -24,80 +24,77 @@ client.once("ready", () => {
 client.on("messageCreate", async function (messages) {
   try {
     if (
-      messages.author.username == "Options Bot" ||
+      messages.author.username == "Option Bot" ||
       messages.author.username == "sharif291"
     ) {
-      if (messages.content.title == "bot" || "bot-1") {
-        messages.delete();
-      }
+      // console.log(messages.content);
+      messages.delete();
       var dt = new Date();
       var offset = -240; //Timezone offset for EST in minutes.
       var estDate = new Date(dt.getTime() + offset * 60 * 1000);
-      console.log(estDate);
-      console.log(estDate.getUTCHours());
-      console.log(estDate.getUTCMinutes());
+      // console.log(estDate);
+      // console.log(estDate.getUTCHours());
+      // console.log(estDate.getUTCMinutes());
       h_now = estDate.getUTCHours() * 60 + estDate.getUTCMinutes();
       var x = messages.content;
       content = typeof x === "string" ? JSON.parse(x) : x;
-      if (
-        (content.title.toLowerCase() === "bot" || "bot-1") &&
-        h_now > 570 &&
-        h_now <= 960
-      ) {
+      console.log(content);
+      if (h_now > 570 && h_now <= 960) {
         // const { symbol, entry, type: _type } = content;
-        const symbol = content.symbol;
-        // const entry = content.entry;
-        const _type = content.type;
-        const expiration = getNextFriday(new Date());
+        const {
+          type: _type,
+          symbol: _symbol,
+          close: _close,
+          position: _position,
+          volume: _volume,
+        } = content;
+        // const expiration = getNextFriday(new Date());
 
         // inside a command, event listener, etc.
         const exampleEmbed = new MessageEmbed()
-          .setColor(_type.toLowerCase() === "call" ? "#00FF00" : "#ff0505")
+          .setColor("#2eff00")
           .setAuthor({
-            name: "Simulate & Trade",
+            name: "OPTION SCALP ALERT",
             iconURL:
               "https://s3.tradingview.com/userpics/37305410-SbsU_big.png",
           })
-          .setThumbnail(
-            "https://s3.tradingview.com/userpics/37305410-SbsU_big.png"
-          )
+          // .setThumbnail(
+          //   "https://s3.tradingview.com/userpics/37305410-SbsU_big.png"
+          // )
           .addFields(
             {
-              name: "Option Alert",
-              value:
-                content.title.toLowerCase() === "bot"
-                  ? "Low Risk, Low Reward"
-                  : "High Risk, High Reward",
-              inline: false,
-            },
-            {
-              name: "Type",
-              value: _type,
-              inline: true,
-            },
-            {
-              name: "Symbol",
-              value: symbol,
-              inline: true,
-            },
-
-            {
-              name: "Position",
-              value: "Day Trade",
-              inline: false,
-            },
-            {
-              name: "Expiration",
-              value: expiration,
+              name: ` Type: ${_type}\nSymbol: ${_symbol}\nPrice: ${_close}\nPosition: ${_position}\nVolume: ${_volume}`,
+              value: "\u200b",
               inline: false,
             }
+            // {
+            //   name: `Symbol: ${_symbol}`,
+            //   value: "\u200b",
+            //   inline: false,
+            // },
+            // {
+            //   name: `Price: ${_close}`,
+            //   value: "\u200b",
+            //   inline: false,
+            // },
+
+            // {
+            //   name: `Position: ${_position}`,
+            //   value: "\u200b",
+            //   inline: false,
+            // },
+            // {
+            //   name: `Volume: ${_volume}`,
+            //   value: "\u200b",
+            //   inline: false,
+            // }
           )
           .setTimestamp();
         messages.channel.send({ embeds: [exampleEmbed] });
       }
     }
   } catch (err) {
-    console.log(err.message);
+    console.log(err);
   }
 });
 client.login(process.env.LIVE_TOKEN);
