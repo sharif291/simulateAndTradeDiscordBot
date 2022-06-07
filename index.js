@@ -74,9 +74,7 @@ client.on("messageCreate", async function (messages) {
           // make existing data json to object
           var data = JSON.parse(prevdata);
           //Find index of specific object using findIndex method.
-          objIndex = data.findIndex(
-            (x) => x.symbol == _symbol && x.type == _type
-          );
+          objIndex = data.findIndex((x) => x.symbol == _symbol);
 
           // IF DATA NOT in file
           if (objIndex == -1) {
