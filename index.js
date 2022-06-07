@@ -1,6 +1,7 @@
 require("dotenv").config();
 const { Client, Intents } = require("discord.js");
 const { MessageEmbed } = require("discord.js");
+const fs = require("fs");
 
 function getNextFriday(date = new Date()) {
   const dateCopy = new Date(date.getTime());
@@ -25,22 +26,40 @@ client.on("messageCreate", async function (messages) {
   try {
     if (
       messages.author.username == "Option Bot" ||
-      messages.author.username == "sharif291"
+      messages.author.username == "sharif291" ||
+      messages.author.username == "Options Bot for AAPL" ||
+      messages.author.username == "Options Bot for AMD" ||
+      messages.author.username == "Options Bot for AMZN" ||
+      messages.author.username == "Options Bot for DIS" ||
+      messages.author.username == "Options Bot for FB" ||
+      messages.author.username == "Options Bot for GOOG" ||
+      messages.author.username == "Options Bot for IWM" ||
+      messages.author.username == "Options Bot for MSFT" ||
+      messages.author.username == "Options Bot for NFLX" ||
+      messages.author.username == "Options Bot for NVDA" ||
+      messages.author.username == "Options Bot for QQQ" ||
+      messages.author.username == "Options Bot for SPY" ||
+      messages.author.username == "Options Bot for SQQQ" ||
+      messages.author.username == "Options Bot for TSLA" ||
+      messages.author.username == "Options Bot for TQQQ"
     ) {
-      // console.log(messages.content);
-      messages.delete();
+      // Delete the message from dwebhooks
+      // structure the sent data
+      var x = messages.content;
+      console.log("message type", typeof x);
+      try {
+        content = typeof x === "string" ? JSON.parse(x) : x;
+        messages.delete();
+      } catch (err) {
+        return;
+      }
+      // check the date time
       var dt = new Date();
       var offset = -240; //Timezone offset for EST in minutes.
       var estDate = new Date(dt.getTime() + offset * 60 * 1000);
-      // console.log(estDate);
-      // console.log(estDate.getUTCHours());
-      // console.log(estDate.getUTCMinutes());
       h_now = estDate.getUTCHours() * 60 + estDate.getUTCMinutes();
-      var x = messages.content;
-      content = typeof x === "string" ? JSON.parse(x) : x;
-      console.log(content);
+      // h_now > 570 && h_now <= 960
       if (h_now > 570 && h_now <= 960) {
-        // const { symbol, entry, type: _type } = content;
         const {
           type: _type,
           symbol: _symbol,
@@ -48,49 +67,113 @@ client.on("messageCreate", async function (messages) {
           position: _position,
           volume: _volume,
         } = content;
-        // const expiration = getNextFriday(new Date());
 
-        // inside a command, event listener, etc.
-        const exampleEmbed = new MessageEmbed()
-          .setColor("#2eff00")
-          .setAuthor({
-            name: "OPTION SCALP ALERT",
-            iconURL:
-              "https://s3.tradingview.com/userpics/37305410-SbsU_big.png",
-          })
-          // .setThumbnail(
-          //   "https://s3.tradingview.com/userpics/37305410-SbsU_big.png"
-          // )
-          .addFields(
-            {
+        // IF FILE EXISTS
+        if (fs.existsSync(`./data.json`)) {
+          // Get existing data
+          let prevdata = fs.readFileSync(`./data.json`);
+          // make existing data json to object
+          var data = JSON.parse(prevdata);
+          //Find index of specific object using findIndex method.
+          objIndex = data.findIndex(
+            (x) => x.symbol == _symbol && x.type == _type
+          );
+
+          // IF DATA NOT in file
+          if (objIndex == -1) {
+            // Add new object to the file
+            data.push({
+              date: new Date().getDate(),
+              type: _type,
+              symbol: _symbol,
+              close: _close,
+              position: _position,
+              volume: _volume,
+            });
+            // send alert
+            const exampleEmbed = new MessageEmbed()
+              .setColor("#2eff00")
+              .setAuthor({
+                name: "OPTION SCALP ALERT",
+                iconURL:
+                  "https://s3.tradingview.com/userpics/37305410-SbsU_big.png",
+              })
+
+              .addFields({
+                name: ` Type: ${_type}\nSymbol: ${_symbol}\nPrice: ${_close}\nPosition: ${_position}\nVolume: ${_volume}`,
+                value: "\u200b",
+                inline: false,
+              })
+              .setTimestamp();
+            messages.channel.send({ embeds: [exampleEmbed] });
+          } else {
+            // if same date same symbol alert
+            if (data[objIndex].date === new Date().getDate()) {
+              // skip
+              return;
+            }
+            // if not same date same symbol alert
+            else {
+              //Update object's name property.
+              data[objIndex].date = new Date().getDate();
+              data[objIndex].type = _type;
+              data[objIndex].symbol = _symbol;
+              data[objIndex].close = _close;
+              data[objIndex].position = _position;
+              data[objIndex].volume = _volume;
+              // send alert
+              // inside a command, event listener, etc.
+              const exampleEmbed = new MessageEmbed()
+                .setColor("#2eff00")
+                .setAuthor({
+                  name: "OPTION SCALP ALERT",
+                  iconURL:
+                    "https://s3.tradingview.com/userpics/37305410-SbsU_big.png",
+                })
+
+                .addFields({
+                  name: ` Type: ${_type}\nSymbol: ${_symbol}\nPrice: ${_close}\nPosition: ${_position}\nVolume: ${_volume}`,
+                  value: "\u200b",
+                  inline: false,
+                })
+                .setTimestamp();
+              messages.channel.send({ embeds: [exampleEmbed] });
+            }
+          }
+          let json_data = JSON.stringify(data);
+          fs.writeFileSync(`./data.json`, json_data);
+        }
+        // IF FILE NOT EXISTS
+        else {
+          // inside a command, event listener, etc.
+          const exampleEmbed = new MessageEmbed()
+            .setColor("#2eff00")
+            .setAuthor({
+              name: "OPTION SCALP ALERT",
+              iconURL:
+                "https://s3.tradingview.com/userpics/37305410-SbsU_big.png",
+            })
+
+            .addFields({
               name: ` Type: ${_type}\nSymbol: ${_symbol}\nPrice: ${_close}\nPosition: ${_position}\nVolume: ${_volume}`,
               value: "\u200b",
               inline: false,
-            }
-            // {
-            //   name: `Symbol: ${_symbol}`,
-            //   value: "\u200b",
-            //   inline: false,
-            // },
-            // {
-            //   name: `Price: ${_close}`,
-            //   value: "\u200b",
-            //   inline: false,
-            // },
-
-            // {
-            //   name: `Position: ${_position}`,
-            //   value: "\u200b",
-            //   inline: false,
-            // },
-            // {
-            //   name: `Volume: ${_volume}`,
-            //   value: "\u200b",
-            //   inline: false,
-            // }
-          )
-          .setTimestamp();
-        messages.channel.send({ embeds: [exampleEmbed] });
+            })
+            .setTimestamp();
+          messages.channel.send({ embeds: [exampleEmbed] });
+          // Store the signal for today
+          let json_data = JSON.stringify([
+            {
+              date: new Date().getDate(),
+              type: _type,
+              symbol: _symbol,
+              close: _close,
+              position: _position,
+              volume: _volume,
+            },
+          ]);
+          fs.writeFileSync(`./data.json`, json_data);
+        }
       }
     }
   } catch (err) {
