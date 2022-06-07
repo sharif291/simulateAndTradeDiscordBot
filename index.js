@@ -106,12 +106,15 @@ client.on("messageCreate", async function (messages) {
               .setTimestamp();
             messages.channel.send({ embeds: [exampleEmbed] });
           } else {
-            // if same date same symbol alert
-            if (data[objIndex].date === new Date().getDate()) {
+            // if  same symbol same typr alert
+            if (
+              data[objIndex].symbol == _symbol &&
+              data[objIndex].type == _type
+            ) {
               // skip
               return;
             }
-            // if not same date same symbol alert
+            // if not same symbol and same type alert
             else {
               //Update object's name property.
               data[objIndex].date = new Date().getDate();
