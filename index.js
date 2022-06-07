@@ -25,23 +25,22 @@ client.once("ready", () => {
 client.on("messageCreate", async function (messages) {
   try {
     if (
-      messages.author.username == "Option Bot" ||
       messages.author.username == "sharif291" ||
-      messages.author.username == "Options Bot for AAPL" ||
-      messages.author.username == "Options Bot for AMD" ||
-      messages.author.username == "Options Bot for AMZN" ||
-      messages.author.username == "Options Bot for DIS" ||
-      messages.author.username == "Options Bot for FB" ||
-      messages.author.username == "Options Bot for GOOG" ||
-      messages.author.username == "Options Bot for IWM" ||
-      messages.author.username == "Options Bot for MSFT" ||
-      messages.author.username == "Options Bot for NFLX" ||
-      messages.author.username == "Options Bot for NVDA" ||
-      messages.author.username == "Options Bot for QQQ" ||
-      messages.author.username == "Options Bot for SPY" ||
-      messages.author.username == "Options Bot for SQQQ" ||
-      messages.author.username == "Options Bot for TSLA" ||
-      messages.author.username == "Options Bot for TQQQ"
+      messages.author.username == "Dragon Bot for AAPL" ||
+      messages.author.username == "Dragon Bot for AMD" ||
+      messages.author.username == "Dragon Bot for AMZN" ||
+      messages.author.username == "Dragon Bot for DIS" ||
+      messages.author.username == "Dragon Bot for FB" ||
+      messages.author.username == "Dragon Bot for GOOG" ||
+      messages.author.username == "Dragon Bot for IWM" ||
+      messages.author.username == "Dragon Bot for MSFT" ||
+      messages.author.username == "Dragon Bot for NFLX" ||
+      messages.author.username == "Dragon Bot for NVDA" ||
+      messages.author.username == "Dragon Bot for QQQ" ||
+      messages.author.username == "Dragon Bot for SPY" ||
+      messages.author.username == "Dragon Bot for SQQQ" ||
+      messages.author.username == "Dragon Bot for TSLA" ||
+      messages.author.username == "Dragon Bot for TQQQ"
     ) {
       // Delete the message from dwebhooks
       // structure the sent data
