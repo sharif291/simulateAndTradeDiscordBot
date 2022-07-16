@@ -103,6 +103,7 @@ client.on("messageCreate", async function (messages) {
               })
               .setTimestamp();
             messages.channel.send({ embeds: [exampleEmbed] });
+            messages.channel.send(`<@&${process.env.ROLE_ID}>`);
           } else {
             // if  same symbol same typr alert
             if (
@@ -138,6 +139,7 @@ client.on("messageCreate", async function (messages) {
                 })
                 .setTimestamp();
               messages.channel.send({ embeds: [exampleEmbed] });
+              messages.channel.send(`<@&${process.env.ROLE_ID}>`);
             }
           }
           let json_data = JSON.stringify(data);
@@ -161,6 +163,7 @@ client.on("messageCreate", async function (messages) {
             })
             .setTimestamp();
           messages.channel.send({ embeds: [exampleEmbed] });
+          messages.channel.send(`<@&${process.env.ROLE_ID}>`);
           // Store the signal for today
           let json_data = JSON.stringify([
             {
